@@ -1,0 +1,6 @@
+__pycache__
+/DB/__pycache__
+/Model/__pycache__
+Router/__pycache__
+security/__pycache__
+.env
