@@ -6,7 +6,7 @@ from sqlalchemy.orm import  relationship
 
 
 class ArclifUser(Base):
-    __tablename__='Arclif_users'
+    __tablename__='arclif_users'
     id                = Column(Integer,primary_key=True,autoincrement=True)
     name              = Column(String,nullable=False)
     mobile_number     = Column(String,nullable=False,unique=True)
@@ -18,7 +18,7 @@ class ArclifUser(Base):
     client_req        = relationship("Client_Requirements", back_populates="owner")
 
 class Client_Details(Base):
-    __tablename__ ='Client_details'
+    __tablename__ ='client_details'
     id                = Column(Integer,primary_key=True,autoincrement=True)
     name              = Column(String,nullable=False)
     mobile_number     = Column(String,nullable=False,unique=True)
@@ -28,7 +28,7 @@ class Client_Details(Base):
     pin_number        = Column(String,nullable=False)
     profession        = Column(String,nullable=False)
     family_members    = Column(Integer,nullable=False)
-    owner_id          = Column(Integer, ForeignKey("Arclif_users.id"))
+    owner_id          = Column(Integer, ForeignKey("arclif_users.id"))
     owner             = relationship("ArclifUser", back_populates="user_details")
     created_at        = Column(DateTime, default=current_timestamp())
     updated_at        = Column(DateTime, onupdate=current_timestamp())
@@ -37,7 +37,7 @@ class Client_Details(Base):
  
 
 class Client_Requirements(Base):
-    __tablename__ ='Client_requirements'
+    __tablename__ ='client_requirements'
     id                   = Column(Integer,primary_key=True,autoincrement=True)
     totoal_budget        = Column(Integer,nullable=False)
     total_area           = Column(String,nullable=False)
@@ -49,7 +49,7 @@ class Client_Requirements(Base):
     outside_washrooms    = Column(Integer,nullable=False)
     inside_washrooms     = Column(Integer,nullable=False)
     attacheed_washrooms  = Column(Integer,nullable=False)
-    owner_id             = Column(Integer, ForeignKey("Arclif_users.id"))
+    owner_id             = Column(Integer, ForeignKey("arclif_users.id"))
     owner                = relationship("ArclifUser", back_populates="client_req")
     created_at           = Column(DateTime, default=current_timestamp())
     updated_at           = Column(DateTime, onupdate=current_timestamp())

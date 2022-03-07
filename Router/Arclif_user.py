@@ -1,3 +1,4 @@
+from http import client
 from sqlalchemy import null
 from fastapi import APIRouter, Depends,status,HTTPException,Response
 from Model.models import ArclifUser
@@ -166,8 +167,15 @@ def create_user_requirements( client:schemas.Requirements_Create, user_id:str,db
 
 
 
-@router.get('/gcleint_requirements',dependencies=[Depends(JWTBearer())],tags=['GET_CLIENT_REQUEREMWENTS'])
+@router.get('/gcleint_requirements',dependencies=[Depends(JWTBearer())],tags=['CLIENT_REQUEREMWENTS'])
 def create_user_requirements(user_id:str,db: session = Depends(get_db)):
     my_client = db.query(models.Client_Details).filter(models.Client_Details.owner_id==user_id).all()
+    
+    return my_client
+
+
+@router.get('/all_cleint',dependencies=[Depends(JWTBearer())],tags=['ALL_CLIENTS'])
+async def getclient(db: session = Depends(get_db)):
+    my_client = db.query(models.ArclifUser).all()
     
     return my_client
