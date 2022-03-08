@@ -53,3 +53,13 @@ class Client_Requirements(Base):
     owner                = relationship("ArclifUser", back_populates="client_req")
     created_at           = Column(DateTime, default=current_timestamp())
     updated_at           = Column(DateTime, onupdate=current_timestamp())
+
+
+
+class Sqt(Base):
+    __tablename__ ='sqt_price'
+    id            = Column(Integer,primary_key=True,autoincrement=True)
+    silver        = Column(Integer,nullable=False)
+    golden        = Column(String,nullable=False)
+    platinum      = Column(Integer,nullable=False)
+                        

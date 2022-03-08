@@ -5,6 +5,7 @@ from pydantic import BaseModel
 
 
 
+
 #signup model
 
 class Arclif_SingUp(BaseModel):
@@ -80,3 +81,10 @@ class rq(Client):
     class Config:
         orm_mode = True
 
+class Sqt_price(BaseModel):
+    silver    :int
+    golden    :int
+    platinum  :int
+
+    class Config:
+        orm_mode = True
