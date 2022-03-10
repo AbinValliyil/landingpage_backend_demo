@@ -16,7 +16,6 @@ from decouple import config
 
 DB='DB_URL'
 
-
 engine =create_engine( config( DB))
 
 

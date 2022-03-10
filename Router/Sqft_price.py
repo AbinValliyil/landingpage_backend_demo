@@ -12,46 +12,58 @@ db = SessionLocal()
 @router.get('/silver_package_price',tags=['PACKAGE_PRICE'])
 async def sqt_cal(sqt:int):
     new = db.query(models.Sqt).filter(models.Sqt.id==1).first()
+    new_sqt_p=db.query(models.Sqt).filter(models.Sqt.id==2).first()
+    if  not new:
+        raise 'Not fixed this amount'
+
+    if  not new_sqt_p:
+        raise 'Not fixed this amount'
+
+    sqt_p =int(new_sqt_p.silver)
     g =int(new.silver)
     v =g*sqt
-    return {'silver_package':v}
+    p = v/sqt_p
+    return {'silver_package':v,f'Advance_payment at {sqt_p}%':p}
 
 
 @router.get('/Golden_package_price',tags=['PACKAGE_PRICE'])
 async def sqt_cal(sqt:int):
     new = db.query(models.Sqt).filter(models.Sqt.id==1).first()
+    
+    new_sqt_p=db.query(models.Sqt).filter(models.Sqt.id==2).first()
+
+    if  not new:
+        raise 'Not fixed this amount'
+   
+    if  not new_sqt_p:
+        raise 'Not fixed this amount'
+
+    sqt_p =int(new_sqt_p.golden)
+
     g=int(new.golden)
     v =g*sqt
-    return {'Golden_package':v}
+    p = v/sqt_p
+    return {'Golden_package':v,f'Advance_payment at {sqt_p}%':p}
 
 
 
 @router.get('/paltinum_package_price',tags=['PACKAGE_PRICE'])
 async def sqt_cal(sqt:int):
     new = db.query(models.Sqt).filter(models.Sqt.id==1).first()
-    g =int(new.platinum)
-    v =g*sqt
- 
-    return {'paltinum_package':v}
-    
+    new_sqt_p=db.query(models.Sqt).filter(models.Sqt.id==2).first()
 
-@router.put('/sql_update',tags=['ADMIN']) 
-async def sql_up(new:schemas.Sqt_price,db:session=Depends(get_db)):
-    new_sqt= db.query(models.Sqt).filter(models.Sqt.id==1).first()
-    if not new_sqt:
-        new_sqt = models.Sqt(**new.dict())
-        db.add(new_sqt)
-        db.commit()
-        db.refresh(new_sqt)
-        return new_sqt
-        
-    #new_sqt =models.Sqt(silver=s,golden=g,platinum=p)
-    new_sqt.silver    =  new.silver
-    new_sqt.golden    =  new.golden
-    new_sqt.platinum  =  new.platinum
-    db.add(new_sqt)
-    db.commit()
-    db.refresh(new_sqt)
-    return new_sqt
+    if  not new:
+        raise 'Not fixed this amount'
+    
+    if  not new_sqt_p:
+        raise 'Not fixed this amount'
+
+    sqt_p =int(new_sqt_p.platinum)
+
+    g =int(new.platinum)
+    v = g*sqt
+    p = v/sqt_p
+ 
+    return {'paltinum_package':v,f'Advance_payment at {sqt_p}%':p}
 
 

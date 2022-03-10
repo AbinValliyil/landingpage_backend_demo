@@ -22,3 +22,42 @@ async def getclient(db: session = Depends(get_db)):
     my_client = db.query(models.ArclifUser).all()
     
     return my_client
+
+
+@router.put('/sql_update',tags=['ADMIN']) 
+async def sql_up(new:schemas.Sqt_price,db:session=Depends(get_db)):
+    new_sqt= db.query(models.Sqt).filter(models.Sqt.id==1).first()
+    if not new_sqt:
+        new_sqt = models.Sqt(**new.dict())
+        db.add(new_sqt)
+        db.commit()
+        db.refresh(new_sqt)
+        return new_sqt
+        
+    #new_sqt =models.Sqt(silver=s,golden=g,platinum=p)
+    new_sqt.silver    =  new.silver
+    new_sqt.golden    =  new.golden
+    new_sqt.platinum  =  new.platinum
+    db.add(new_sqt)
+    db.commit()
+    db.refresh(new_sqt)
+    return new_sqt
+
+@router.put('/sql_pstg_update',tags=['ADMIN']) 
+async def sql_up(new:schemas.Sqt_price,db:session=Depends(get_db)):
+    new_sqt= db.query(models.Sqt).filter(models.Sqt.id==2).first()
+    if not new_sqt:
+        new_sqt = models.Sqt(**new.dict())
+        db.add(new_sqt)
+        db.commit()
+        db.refresh(new_sqt)
+        return new_sqt
+        
+    #new_sqt =models.Sqt(silver=s,golden=g,platinum=p)
+    new_sqt.silver    =  new.silver
+    new_sqt.golden    =  new.golden
+    new_sqt.platinum  =  new.platinum
+    db.add(new_sqt)
+    db.commit()
+    db.refresh(new_sqt)
+    return new_sqt

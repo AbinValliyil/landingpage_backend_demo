@@ -11,8 +11,6 @@ from pydantic import BaseModel
 class Arclif_SingUp(BaseModel):
     name           :str
     mobile_number  :str
-    email          :str
-    password       :str
 
 
 class config:
@@ -26,7 +24,6 @@ class config:
 class ArclifUser_login(BaseModel):
 
     mobile_number:str
-    password     :str
 
     class config:
         orm_mode = True
@@ -36,12 +33,12 @@ class ArclifUser_login(BaseModel):
 class Arclif_client(BaseModel):
     name:str
     mobile_number:str
-    email:str
     city:str
     state:str
     pin_number:str
     profession  :str
     family_members :int
+    sinior_citzen  :bool
     
 class Arclif_client_details(Arclif_client):
     pass
@@ -58,16 +55,16 @@ class Rel(Arclif_client):
 
 
 class Client(BaseModel):
- totoal_budget        :int
+ totoal_budget        :str
  total_area           :str
- floor_number         :int
+ floor_number         :str
  design               :str
- common_bedrooms      :int
- attached_bedrooms    :int
- family_members       :int
- outside_washrooms    :int
- inside_washrooms     :int
- attacheed_washrooms  :int
+ common_bedrooms      :str
+ attached_bedrooms    :str
+ family_members       :str
+ outside_washrooms    :str
+ inside_washrooms     :str
+ attacheed_washrooms  :str
 
 
 class Requirements_Create(Client):

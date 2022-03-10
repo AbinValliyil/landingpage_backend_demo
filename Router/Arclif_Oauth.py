@@ -20,37 +20,23 @@ async def create_an_user(user:schemas.Arclif_SingUp,db:session=Depends(get_db)):
     
     
     db_user_num= db.query(ArclifUser).filter(models.ArclifUser.mobile_number ==user.mobile_number).first()
-    db_user_email= db.query(ArclifUser).filter(models.ArclifUser.email==user.email).first()
+    
   
     if  db_user_num  is not  None:
-        raise HTTPException(detail="mobile  number already exists! !",status_code=404)
-        #return JSONResponse(status_code=400,content="mobile number already exists!")
-        # return{"error_message": "mobile or email number already exists!","status":status.HTTP_400_BAD_REQUEST}
-        
-    elif  db_user_email  is not  None:
-        # raise HTTPException(status_code=400,error_message="mobile number already exists!")
-        #return JSONResponse(status_code=400,content="mobile number already exists!")
-        # return{"error_message": "mobile or email number already exists!","status":status.HTTP_400_BAD_REQUEST}
-        raise HTTPException(detail=" email_id already exists! !",status_code=404)
-    else:
+        raise HTTPException(detail="mobile  number already exists!",status_code=404)
 
-      hashed_password = hash(user.password)
-      user.password = hashed_password
-      
-    
-      token =signJWT(user.mobile_number)
+    token =signJWT(user.mobile_number)
 
-      new_user = models.ArclifUser(**user.dict())
+    new_user = models.ArclifUser(**user.dict())
     
-      db.add(new_user)
-      db.commit()
-      db.refresh(new_user)
-      f_id = db.query(models.ArclifUser.id).filter(models.ArclifUser.mobile_number==user.mobile_number).first()
-      return {
-        'status'         :"true",
+    db.add(new_user)
+    db.commit()
+    db.refresh(new_user)
+    f_id = db.query(models.ArclifUser.id).filter(models.ArclifUser.mobile_number==user.mobile_number).first()
+    return {
+        'status':"true",
          **f_id,
         'name'    :user.name,
-        'email'   :user.email,
         'mob'     :user.mobile_number,
         'token'  :token
         
@@ -65,8 +51,6 @@ def user_login(user_credentials:schemas.ArclifUser_login,db:session=Depends(get_
           raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="There was a problem with your login")
 
     
-    if not verify(user_credentials.password,user.password):
-              raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="There was a problem with your login")
 
     token =signJWT(user.mobile_number)
 
@@ -81,48 +65,48 @@ def user_login(user_credentials:schemas.ArclifUser_login,db:session=Depends(get_
 
 
     
-@router.post("/cookie/",tags=['SET-COOKIE'])
-def create_cookie(mobile_number:str,password = None):
-    token1 = signJWT( mobile_number )
-    content = {"message": "Come to the dark , we have cookies"}
-    response = JSONResponse(content=content)
-    response.set_cookie(key="Bearer",value=token1,expires=60,httponly=True,samesite=None,secure=True)
-    return response
+# @router.post("/cookie/",tags=['SET-COOKIE'])
+# def create_cookie(mobile_number:str,password = None):
+#     token1 = signJWT( mobile_number )
+#     content = {"message": "Come to the dark , we have cookies"}
+#     response = JSONResponse(content=content)
+#     response.set_cookie(key="Bearer",value=token1,expires=60,httponly=True,samesite=None,secure=True)
+#     return response
 
 
   
 
 
-@router.put('/Reset_password',tags=["OAUTH"])
-async def reset(user:schemas.ArclifUser_login,db:session=Depends(get_db)):
+# @router.put('/Reset_password',tags=["OAUTH"])
+# async def reset(user:schemas.ArclifUser_login,db:session=Depends(get_db)):
     
-    users = db.query(models.ArclifUser).filter(models.ArclifUser.mobile_number==user.mobile_number).first()
+#     users = db.query(models.ArclifUser).filter(models.ArclifUser.mobile_number==user.mobile_number).first()
     
-    if not users:
+#     if not users:
 
     
-     return{"error_message": "There was a problem with your password reset","status":status.HTTP_404_NOT_FOUND}
+#      return{"error_message": "There was a problem with your password reset","status":status.HTTP_404_NOT_FOUND}
     
-    hashed_password = hash(user.password)
-    users.password  = hashed_password
+#     hashed_password = hash(user.password)
+#     users.password  = hashed_password
     
-    token = signJWT( user.mobile_number )
+#     token = signJWT( user.mobile_number )
     
 
-    db.add(users)
-    db.commit()
-    db.refresh(users)
+#     db.add(users)
+#     db.commit()
+#     db.refresh(users)
 
     
-    return  {"message":"password reset success ",'user_data':{
+#     return  {"message":"password reset success ",'user_data':{
 
-                'status'         :200,
-                'id'             :users.id,
-                'name'           :users.name,
-                'mobile_number'  : user.mobile_number,
-                "access_token"   :token,  
-                "token_type"     :"Bearer",
-                'status'         :status.HTTP_302_FOUND }}
+#                 'status'         :200,
+#                 'id'             :users.id,
+#                 'name'           :users.name,
+#                 'mobile_number'  : user.mobile_number,
+#                 "access_token"   :token,  
+#                 "token_type"     :"Bearer",
+#                 'status'         :status.HTTP_302_FOUND }}
     
 
 
