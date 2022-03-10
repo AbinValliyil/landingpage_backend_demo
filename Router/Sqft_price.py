@@ -14,10 +14,10 @@ async def sqt_cal(sqt:int):
     new = db.query(models.Sqt).filter(models.Sqt.id==1).first()
     new_sqt_p=db.query(models.Sqt).filter(models.Sqt.id==2).first()
     if  not new:
-        raise 'Not fixed this amount'
+        return 'Not fixed this amount'
 
     if  not new_sqt_p:
-        raise 'Not fixed this amount'
+        return 'Not fixed this amount'
 
     sqt_p =int(new_sqt_p.silver)
     g =int(new.silver)
@@ -33,10 +33,10 @@ async def sqt_cal(sqt:int):
     new_sqt_p=db.query(models.Sqt).filter(models.Sqt.id==2).first()
 
     if  not new:
-        raise 'Not fixed this amount'
+        return 'Not fixed this amount'
    
     if  not new_sqt_p:
-        raise 'Not fixed this amount'
+        return 'Not fixed this amount'
 
     sqt_p =int(new_sqt_p.golden)
 
@@ -53,10 +53,10 @@ async def sqt_cal(sqt:int):
     new_sqt_p=db.query(models.Sqt).filter(models.Sqt.id==2).first()
 
     if  not new:
-        raise 'Not fixed this amount'
+        return 'Not fixed this amount'
     
     if  not new_sqt_p:
-        raise 'Not fixed this amount'
+        return 'Not fixed this amount'
 
     sqt_p =int(new_sqt_p.platinum)
 
