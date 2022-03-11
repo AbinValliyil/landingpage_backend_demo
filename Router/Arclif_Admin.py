@@ -12,6 +12,8 @@ db = SessionLocal()
 @router.get('/gcleint_requirements',dependencies=[Depends(JWTBearer())],tags=['ADMIN'])
 def create_user_requirements(user_id:str,db: session = Depends(get_db)):
     my_client = db.query(models.Client_Requirements).filter(models.Client_Requirements.owner_id==user_id).all()
+    if not my_client:
+        return "Empty data"
     client =my_client.pop()
 
     return client
@@ -20,6 +22,8 @@ def create_user_requirements(user_id:str,db: session = Depends(get_db)):
 @router.get('/all_cleint',dependencies=[Depends(JWTBearer())],tags=['ADMIN'])
 async def getclient(db: session = Depends(get_db)):
     my_client = db.query(models.ArclifUser).all()
+    if not my_client:
+        return "Empty data"
     
     return my_client
 

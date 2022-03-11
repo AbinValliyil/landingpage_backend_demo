@@ -14,10 +14,20 @@ def token_response(token: str):
 
 
     
-def signJWT(mobile_number: str)-> Dict[str, str]:
+def signJWT_access(mobile_number: str)-> Dict[str, str]:
     payload = {
         "mobile_number": mobile_number,
-        "expires": time.time()+6000
+        "expires": time.time()+900
+    }
+
+    token = jwt.encode(payload, JWT_SECRET, algorithm=JWT_ALGORITHM)
+
+    return token_response(token)
+    
+def signJWT_refresh(mobile_number: str)-> Dict[str, str]:
+    payload = {
+        "mobile_number": mobile_number,
+        "expires": time.time()+2.592e+6
     }
 
     token = jwt.encode(payload, JWT_SECRET, algorithm=JWT_ALGORITHM)

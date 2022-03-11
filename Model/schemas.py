@@ -29,6 +29,17 @@ class ArclifUser_login(BaseModel):
         orm_mode = True
 
 
+class Refresh_token(BaseModel):
+    refresh_token :str
+class config:
+    orm_mode = True
+
+
+
+class config:
+    orm_mode = True
+
+
 
 class Arclif_client(BaseModel):
     name:str
