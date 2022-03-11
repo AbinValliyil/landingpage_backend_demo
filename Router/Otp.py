@@ -4,6 +4,11 @@ from Security.Random_OTP import OTPgenerator
 import requests
 from DB.db import Base, engine,get_db ,SessionLocal
 from sqlalchemy.orm import session
+from decouple import config
+
+
+
+API = config("OTP_API")
 
 
 
@@ -27,7 +32,7 @@ async def otp(mobile_num:str,db:session=Depends(get_db)):
     mobile_number =mobile_num
     payload = f"variables_values={otp} , Team  ARCLIF ! &route=otp&numbers={mobile_number}"
     headers = {
-    'authorization':"1IJ6RkwgEFBm4i5YZdPD2SQj3GKrNebCh8xyOMTXopuv0HsUqlFfAkThdebIwMBYx7OE9tri2DlsRU1v",
+    'authorization':API,
     'Content-Type': "application/x-www-form-urlencoded",
     'Cache-Control': "no-cache",
     }  
@@ -62,7 +67,7 @@ async def otp(mobile_num:str,db:session=Depends(get_db)):
     mobile_number =mobile_num
     payload = f"variables_values={otp} , Team ARCLIF ! &route=otp&numbers={mobile_number}"
     headers = {
-    'authorization':"1IJ6RkwgEFBm4i5YZdPD2SQj3GKrNebCh8xyOMTXopuv0HsUqlFfAkThdebIwMBYx7OE9tri2DlsRU1v",
+    'authorization':API,
     'Content-Type': "application/x-www-form-urlencoded",
     'Cache-Control': "no-cache",
     }  
