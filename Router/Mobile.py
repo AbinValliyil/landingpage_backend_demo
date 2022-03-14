@@ -85,7 +85,7 @@ async def otp(mobile_num:str,db:session=Depends(get_db)):
     
 
 @router.post('/otp_verification',tags=['MOBILE_OTP'])
-async def otp_verification(mobile:str,otp:str,otp_id:int,db:session=Depends(get_db)):
+async def otp_verification(mobile:str,otp:str,db:session=Depends(get_db)):
      
     
     valid_otps = db.query(models.ARCLIF_OTP.otp).filter(models.ARCLIF_OTP.mobile_number==mobile).all()
