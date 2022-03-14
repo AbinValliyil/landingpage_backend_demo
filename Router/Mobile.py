@@ -84,32 +84,22 @@ async def otp(mobile_num:str,db:session=Depends(get_db)):
     return {"status":status.HTTP_202_ACCEPTED,"mob":mobile_num,'id':new_otp.id}
     
 
+
+    
 @router.post('/otp_verification',tags=['MOBILE_OTP'])
-async def otp_verification(mobile:str,otp:str,db:session=Depends(get_db)):
+def otp_verification(mobile:str,otp:str,db:session=Depends(get_db)):
      
     
     valid_otps = db.query(models.ARCLIF_OTP.otp).filter(models.ARCLIF_OTP.mobile_number==mobile).all()
-
     
+    print(valid_otps)
     
 
     if valid_otps:
         valid_otp =list(valid_otps).pop()
-
-
         if valid_otp[0] == otp:
 
-            valid_otps = db.query(models.ARCLIF_OTP).filter(models.ARCLIF_OTP.id==otp).first()
-            if not valid_otps:
-                return 'Invalid_id'
-
-        db.delete(valid_otps)
-        db.commit()
- 
-
-        return {"message":"OTP Verification Successfull","status":status.HTTP_202_ACCEPTED}
+            return {"message":"OTP Verification Successfull","status":status.HTTP_202_ACCEPTED}
 
              
     return {"message":"Invalid OTP","status":status.HTTP_404_NOT_FOUND}
-    
-
