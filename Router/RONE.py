@@ -86,7 +86,3 @@ async def otp(mobile_num:str,db:session=Depends(get_db)):
     
 
 
-
-# @router.post('/image_upload')
-# async def img():
-#     pass

@@ -99,7 +99,7 @@ async def otp_verification(mobile:str,otp:str,db:session=Depends(get_db)):
 
         if valid_otp[0] == otp:
 
-            valid_otps = db.query(models.ARCLIF_OTP).filter(models.ARCLIF_OTP.id==otp_id).first()
+            valid_otps = db.query(models.ARCLIF_OTP).filter(models.ARCLIF_OTP.id==otp).first()
             if not valid_otps:
                 return 'Invalid_id'
 
