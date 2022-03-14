@@ -10,7 +10,7 @@ db = SessionLocal()
 
 
 @router.post('/cleint_details',dependencies=[Depends(JWTBearer())],tags=['CLIENT'])
-def create_user_details( client:schemas.Arclif_client_details, user_id:int,db: session = Depends(get_db)):
+async def create_user_details( client:schemas.Arclif_client_details, user_id:int,db: session = Depends(get_db)):
     
  
 
@@ -22,7 +22,7 @@ def create_user_details( client:schemas.Arclif_client_details, user_id:int,db: s
 
 
 @router.put('/Update_cleint_details',dependencies=[Depends(JWTBearer())],tags=['CLIENT'])
-def create_user_details( client:schemas.Arclif_client_details, user_id:int,db: session = Depends(get_db)):
+async def create_user_details( client:schemas.Arclif_client_details, user_id:int,db: session = Depends(get_db)):
     
  
 
@@ -35,13 +35,13 @@ def create_user_details( client:schemas.Arclif_client_details, user_id:int,db: s
 
 
 @router.post('/cleint_requirements',dependencies=[Depends(JWTBearer())],tags=['CLIENT'])
-def create_user_requirements( client:schemas.Requirements_Create, user_id:str,db: session = Depends(get_db)):
+async def create_user_requirements( client:schemas.Requirements_Create, user_id:str,db: session = Depends(get_db)):
        
     new_client = db.query(models.Client_Requirements).filter(models.Client_Requirements.owner_id==user_id).first()
     if not new_client :
         return 'first you put details then update'
     
-    new_client = models. Client_Requirements(**client.dict(),owner_id=user_id)
+    new_client =  models. Client_Requirements(**client.dict(),owner_id=user_id)
     db.add(new_client)
     db.commit()
     return client
@@ -52,7 +52,7 @@ def create_user_requirements( client:schemas.Requirements_Create, user_id:str,db
 # client update a choose in db like a 30 posts at he choose id = 23 how to update
 
 @router.put('/Update_cleint_requirements',dependencies=[Depends(JWTBearer())],tags=['CLIENT'])
-def create_user_requirements( client:schemas.Requirements_Create, user_id:str,db: session = Depends(get_db)):
+async def create_user_requirements( client:schemas.Requirements_Create, user_id:str,db: session = Depends(get_db)):
     
     new_client = db.query(models.Client_Requirements).filter(models.Client_Requirements.owner_id==user_id).first()
     if not new_client :

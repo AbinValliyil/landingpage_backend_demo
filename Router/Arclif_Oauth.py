@@ -21,6 +21,7 @@ async def create_an_user(user:schemas.Arclif_SingUp,db:session=Depends(get_db)):
     
     
     db_user_num= db.query(ArclifUser).filter(models.ArclifUser.mobile_number ==user.mobile_number).first()
+    # db_user_num =(ArclifUser).query.filter(ArclifUser.mobile_number==user.mobile_number).first()
     
   
     if  db_user_num  is not  None:
@@ -70,7 +71,7 @@ def user_login(user_credentials:schemas.ArclifUser_login,db:session=Depends(get_
     }
 
 @router.post('/new_access_token',tags =['REFRESH_TOKEN'])
-async def new_token(token:schemas.Refresh_token):
+def new_token(token:schemas.Refresh_token):
     token =decodeJWT(token.refresh_token)
     if not token:
         return{'Error_message':'Invalid token or expired token'}

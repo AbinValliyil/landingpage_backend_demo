@@ -59,7 +59,7 @@ class Sqt(Base):
     __tablename__ ='sqt_price'
     id            = Column(Integer,primary_key=True,autoincrement=True)
     silver        = Column(Integer,nullable=False)
-    golden        = Column(String,nullable=False)
+    golden        = Column(Integer,nullable=False)
     platinum      = Column(Integer,nullable=False)
                         
 
