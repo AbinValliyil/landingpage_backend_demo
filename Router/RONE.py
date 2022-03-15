@@ -29,7 +29,7 @@ from fastapi.responses import FileResponse
 from os import getcwd, remove
 from fastapi.responses import JSONResponse
 
-path ='/SRC'
+
 
 @router.post('/OTP_Genarator/rone/singup',tags=['RONE'])
 async def otp(mobile_num:str,db:session=Depends(get_db)):
