@@ -8,7 +8,7 @@ from decouple import config
 
 #local database
 
-engine=create_engine('postgresql://postgres:123@localhost/Arclif',echo=True) 
+# engine=create_engine('postgresql://postgres:123@localhost/Arclif',echo=True) 
 
 
 #heroku database
@@ -16,7 +16,7 @@ engine=create_engine('postgresql://postgres:123@localhost/Arclif',echo=True)
 
 DB='DB_URL'
 
-# engine =create_engine( config( DB))
+engine =create_engine( config( DB))
 
 
 print("Database ****** connected")
