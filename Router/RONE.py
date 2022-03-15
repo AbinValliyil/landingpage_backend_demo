@@ -1,3 +1,5 @@
+from cmath import e
+from urllib import response
 from fastapi import APIRouter, Depends,status,HTTPException
 from Model import schemas,models
 from Security.Random_OTP import OTPgenerator
@@ -5,6 +7,9 @@ import requests,time,datetime
 from DB.db import Base, engine,get_db ,SessionLocal
 from sqlalchemy.orm import session
 from decouple import config
+from fastapi import FastAPI, File, UploadFile
+from fastapi.responses import FileResponse
+import aiofiles
 
 
 
@@ -20,8 +25,11 @@ db = SessionLocal()
 
 # THIS APIS FOR RONE  PROJECT
 
+from fastapi.responses import FileResponse
+from os import getcwd, remove
+from fastapi.responses import JSONResponse
 
-
+path ='/SRC'
 
 @router.post('/OTP_Genarator/rone/singup',tags=['RONE'])
 async def otp(mobile_num:str,db:session=Depends(get_db)):
@@ -86,3 +94,53 @@ async def otp(mobile_num:str,db:session=Depends(get_db)):
     
 
 
+@router.post("/upload-file")
+async def create_upload_file(file: UploadFile = File(...)):
+    print("filename = ", file.filename) # getting filename
+    destination_file_path = "Static/image"+file.filename # location to store file
+    async with aiofiles.open(destination_file_path, 'wb') as out_file:
+        while content := await file.read(1024):  # async read file chunk
+            await out_file.write(content)  # async write file chunk
+
+    return {"Result": "OK",'path':destination_file_path,"filenames": file.filename}
+
+
+
+@router.get("/download-file")
+def download_file():
+    file_path = "Static/imageScreenshot (101).png"
+    return FileResponse(path=file_path, filename=file_path)
+
+
+@router.post("/upload-files")
+async def create_upload_files(files: list[UploadFile] = File(...)):
+    for file in files:
+        destination_file_path = "Static/image"+file.filename #output file path
+        async with aiofiles.open(destination_file_path, 'wb') as out_file:
+            while content := await file.read(1024):  # async read file chunk
+                await out_file.write(content)  # async write file chunk
+
+    return {"Result": "OK", "filenames": [file.filename for file in files]}
+
+
+# @router.get("/res-file")
+# def download_file(file_name:str):
+#     return FileResponse(getcwd() +'/'+ file_name)
+@router.delete("/delete/file/{name_file}")
+def delete_file(name_file: str):
+    try:
+        remove(getcwd() + "/" + name_file)
+        return JSONResponse(content={
+            "removed": True
+            }, status_code=200)   
+    except FileNotFoundError:
+        return JSONResponse(content={
+            "removed": False,
+            "error_message": "File not found"
+        }, status_code=404)
+
+@router.get('/img')
+async def d():
+   
+    return FileResponse('Static\imageIMG_20220301_174007.jpg')
+    
