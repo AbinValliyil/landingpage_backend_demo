@@ -28,13 +28,13 @@ async def email():
     
    try:
 
-        server.login('abinvalliyil@gmail.com','bkjsvwpjntlpfaqr')
+        server.login('@gmail.com','password')
          
    except:
         return 404
    try:
         
-         server.sendmail("abinvalliyil@gmail.com","rbinu4200@gmail.com",'Hello its python ')
+         server.sendmail("sender","reciver",'Hello its python ')
 
          server.quit()
    except:
